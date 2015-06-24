@@ -15,6 +15,17 @@ public class MySimpleAdapter extends RecyclerView.Adapter<MyViewHolder> {
     private Context mContext;
     private List<String> mDatas;
 
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+        void onItemLongClick(View view, int position);
+    }
+
+    private OnItemClickListener mOnItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mOnItemClickListener = listener;
+    }
+
     public MySimpleAdapter(Context context, List<String> datas) {
         this.mContext = context;
         this.mDatas = datas;
@@ -29,8 +40,26 @@ public class MySimpleAdapter extends RecyclerView.Adapter<MyViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(final MyViewHolder myViewHolder, final int i) {
         myViewHolder.tv.setText(mDatas.get(i));
+
+        if (mOnItemClickListener!=null) {
+            myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onItemClick(myViewHolder.itemView, i);
+                }
+            });
+
+            myViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    mOnItemClickListener.onItemLongClick(myViewHolder.itemView, i);
+                    return false;
+                }
+            });
+        }
     }
 
     @Override
