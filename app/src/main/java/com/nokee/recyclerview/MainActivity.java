@@ -3,6 +3,7 @@ package com.nokee.recyclerview;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +37,8 @@ public class MainActivity extends ActionBarActivity {
 
         // 设置RecyclerView的Item的间隔线
         mReclyerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
+
+        mReclyerView.setItemAnimator(new DefaultItemAnimator());
     }
 
     private void initViews() {
@@ -77,6 +80,12 @@ public class MainActivity extends ActionBarActivity {
             case R.id.action_staggered:
                 Intent intent = new Intent(this, StaggeredGridLayoutActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.action_add:
+                mAdapter.addData(1);
+                break;
+            case R.id.action_delete:
+                mAdapter.deleteData(1);
                 break;
         }
 

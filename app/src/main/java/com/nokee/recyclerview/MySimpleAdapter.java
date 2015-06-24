@@ -9,9 +9,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by feng on 15-6-23.
- */
 public class MySimpleAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     private LayoutInflater mInflater;
@@ -39,6 +36,16 @@ public class MySimpleAdapter extends RecyclerView.Adapter<MyViewHolder> {
     @Override
     public int getItemCount() {
         return mDatas.size();
+    }
+
+    public void addData(int pos) {
+        mDatas.add(pos, "insert one");
+        notifyItemInserted(pos);
+    }
+
+    public void deleteData(int pos) {
+        mDatas.remove(pos);
+        notifyItemRemoved(pos);
     }
 }
 
