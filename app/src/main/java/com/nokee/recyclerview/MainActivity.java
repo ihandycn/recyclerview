@@ -45,12 +45,12 @@ public class MainActivity extends ActionBarActivity {
         mAdapter.setOnItemClickListener(new MySimpleAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(MainActivity.this, "Long click:" + position + "", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Long click:" + position + "", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onItemLongClick(View view, int position) {
-                Toast.makeText(MainActivity.this, "click:" + position + "", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "click:" + position + "", Toast.LENGTH_SHORT).show();
             }
         });
     }

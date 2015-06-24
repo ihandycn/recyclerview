@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,18 @@ public class StaggeredGridLayoutActivity extends ActionBarActivity {
 
         // 设置RecyclerView的Item的间隔线
         mReclyerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
+
+        mAdapter.setOnItemClickListener(new MySimpleAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                mAdapter.deleteData(position);
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        });
     }
 
     private void initViews() {

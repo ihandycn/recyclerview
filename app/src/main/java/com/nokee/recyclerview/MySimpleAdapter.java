@@ -13,7 +13,30 @@ public class MySimpleAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     private LayoutInflater mInflater;
     private Context mContext;
-    private List<String> mDatas;
+    protected List<String> mDatas;
+
+    protected void setUpItemEvent(final MyViewHolder myViewHolder) {
+
+        if (mOnItemClickListener!=null) {
+            myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int layoutPosition = myViewHolder.getLayoutPosition();
+                    mOnItemClickListener.onItemClick(myViewHolder.itemView, layoutPosition);
+                }
+            });
+
+            myViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    int layoutPosition = myViewHolder.getLayoutPosition();
+                    mOnItemClickListener.onItemLongClick(myViewHolder.itemView, layoutPosition);
+                    return false;
+                }
+            });
+        }
+    }
 
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
@@ -42,24 +65,7 @@ public class MySimpleAdapter extends RecyclerView.Adapter<MyViewHolder> {
     @Override
     public void onBindViewHolder(final MyViewHolder myViewHolder, final int i) {
         myViewHolder.tv.setText(mDatas.get(i));
-
-        if (mOnItemClickListener!=null) {
-            myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mOnItemClickListener.onItemClick(myViewHolder.itemView, i);
-                }
-            });
-
-            myViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-
-                    mOnItemClickListener.onItemLongClick(myViewHolder.itemView, i);
-                    return false;
-                }
-            });
-        }
+        setUpItemEvent(myViewHolder);
     }
 
     @Override
@@ -68,7 +74,7 @@ public class MySimpleAdapter extends RecyclerView.Adapter<MyViewHolder> {
     }
 
     public void addData(int pos) {
-        mDatas.add(pos, "insert one");
+        mDatas.add(pos, "insert one 1");
         notifyItemInserted(pos);
     }
 

@@ -16,21 +16,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by feng on 15-6-23.
- */
-public class StaggeredAdapter extends RecyclerView.Adapter<MyViewHolder2> {
-
-    private LayoutInflater mInflater;
-    private Context mContext;
-    private List<String> mDatas;
+public class StaggeredAdapter extends MySimpleAdapter {
 
     private List<Integer> mHeights;
 
     public StaggeredAdapter(Context context, List<String> datas) {
-        this.mContext = context;
-        this.mDatas = datas;
-        mInflater = LayoutInflater.from(context);
+        super(context, datas);
 
         mHeights = new ArrayList<Integer>();
         for(int i=0; i < mDatas.size(); i++) {
@@ -39,33 +30,15 @@ public class StaggeredAdapter extends RecyclerView.Adapter<MyViewHolder2> {
     }
 
     @Override
-    public MyViewHolder2 onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = mInflater.inflate(R.layout.item_single_textview, viewGroup, false);
-        MyViewHolder2 viewHolder = new MyViewHolder2(view);
-        return viewHolder;
-    }
-
-    @Override
-    public void onBindViewHolder(MyViewHolder2 myViewHolder, int i) {
+    public void onBindViewHolder(MyViewHolder myViewHolder, int i) {
         StaggeredGridLayoutManager.LayoutParams lp = (StaggeredGridLayoutManager.LayoutParams) myViewHolder.itemView.getLayoutParams();
         lp.height = mHeights.get(i);
         myViewHolder.itemView.setLayoutParams(lp);
         myViewHolder.tv.setText(mDatas.get(i));
+
+        setUpItemEvent(myViewHolder);
     }
 
-    @Override
-    public int getItemCount() {
-        return mDatas.size();
-    }
 }
 
-class MyViewHolder2 extends RecyclerView.ViewHolder {
-
-    TextView tv;
-
-    public MyViewHolder2(View itemView) {
-        super(itemView);
-        tv = (TextView)itemView.findViewById(R.id.tv);
-    }
-}
 
